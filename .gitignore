@@ -1,0 +1,9 @@
+# 개인 생각/가치관 (비공개)
+life/
+
+# Obsidian 설정
+.obsidian/
+
+# 시스템 파일
+.DS_Store
+.trash/
