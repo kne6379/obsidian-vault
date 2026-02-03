@@ -1,6 +1,6 @@
 # Obsidian Knowledge Vault
 
-개인 지식 관리를 위한 Obsidian 기반 문서 저장소입니다.
+Obsidian과 Claude를 활용하여 AI 기반으로 지식을 정리하고 관리하는 개인 문서 저장소입니다.
 
 ---
 
