@@ -20,26 +20,10 @@ Obsidian과 Claude를 활용하여 AI 기반으로 지식을 정리하고 관리
 
 ---
 
-## 주요 문서
+## 문서 목록
 
-### develop/concepts/
-
-| 문서 | 설명 |
-|------|------|
-| API Gateway | MSA 단일 진입점 패턴 |
-| Docker | 컨테이너화 플랫폼 |
-| ECS | AWS 컨테이너 오케스트레이션 |
-| GraphRAG | 지식 그래프 기반 RAG |
-| RAG | 검색 증강 생성 |
-| SOLID | 객체지향 설계 5원칙 |
-| 일반화와 추상화 | 객체지향 설계 핵심 개념 |
-
-### work/
-
-| 문서 | 설명 |
-|------|------|
-| Batch Processing | 배치 처리 서비스 설계 |
-| EventBridge 도입 미팅 | 스케줄링 서비스 전환 검토 |
+- [develop 문서 목록](develop/_meta/INDEX.md)
+- [work 문서 목록](work/_meta/INDEX.md)
 
 ---
 
