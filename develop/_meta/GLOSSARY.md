@@ -60,6 +60,8 @@ status: done
 
 **서킷 브레이커** (Circuit Breaker) - 장애가 발생한 서비스로의 호출을 일시 차단하여 장애 전파를 방지하는 패턴
 
+**SOLID** - 객체지향 설계의 5가지 원칙(SRP, OCP, LSP, ISP, DIP)의 앞글자를 딴 약어
+
 ---
 
 ## ㅇ
