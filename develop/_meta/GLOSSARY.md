@@ -60,6 +60,8 @@ status: done
 
 **서킷 브레이커** (Circuit Breaker) - 장애가 발생한 서비스로의 호출을 일시 차단하여 장애 전파를 방지하는 패턴
 
+**스레드** (Thread) - 프로세스 내에서 실행되는 흐름의 단위. 프로세스의 자원을 공유하며 스택만 독립적으로 가짐
+
 **SOLID** - 객체지향 설계의 5가지 원칙(SRP, OCP, LSP, ISP, DIP)의 앞글자를 딴 약어
 
 ---
@@ -88,6 +90,8 @@ status: done
 
 ## ㅊ
 
+**컨텍스트 스위칭** (Context Switching) - CPU가 한 프로세스/스레드에서 다른 것으로 전환할 때 상태를 저장하고 복원하는 과정
+
 **컨테이너** (Container) - 애플리케이션과 그 실행 환경을 격리된 단위로 패키징하는 가상화 기술
 
 **컨테이너 오케스트레이션** (Container Orchestration) - 다수의 컨테이너 배포, 관리, 확장, 네트워킹을 자동화하는 기술. ECS, Kubernetes 등이 대표적
@@ -107,6 +111,8 @@ status: done
 ## ㅍ
 
 **파인튜닝** (Fine-tuning) - 사전 학습된 모델을 특정 도메인이나 작업에 맞게 추가 학습시키는 방법
+
+**프로세스** (Process) - 운영체제로부터 자원을 할당받는 작업의 단위. 독립적인 메모리 공간을 가짐
 
 **프롬프트** (Prompt) - LLM에 입력으로 제공되는 텍스트 지시문
 
@@ -135,6 +141,8 @@ status: done
 **EKS** (Elastic Kubernetes Service) - AWS의 관리형 Kubernetes 서비스
 
 **Fargate** - AWS의 서버리스 컨테이너 컴퓨팅 엔진. ECS/EKS와 함께 사용하여 인프라 관리 없이 컨테이너 실행
+
+**IPC** (Inter-Process Communication) - 프로세스 간 데이터를 주고받는 통신 기법. 파이프, 소켓, 공유 메모리 등이 있음
 
 **LLM** (Large Language Model) - 대규모 텍스트 데이터로 학습된 자연어 처리 인공지능 모델
 
