@@ -11,28 +11,28 @@ status: active
 
 AI 기반 교육 콘텐츠(문제/지문) 자동 생성 및 품질 평가 서비스의 **LLM 통신 백엔드**입니다. 기존 NestJS/TypeScript 기반 SDK 직접 호출 구조를 **Python + LangChain + FastAPI** 기반으로 전면 교체하면서, 모듈 구조를 클린 아키텍처 원칙에 따라 리팩토링하는 마이그레이션 프로젝트입니다.
 
-**기간**: 2025.02 ~ 현재
+**기간**: 2025.12 ~ 현재
 **역할**: 백엔드 아키텍처 설계 및 전체 구현, AI 개발 워크플로우 설계
 
 ---
 
 ## 기술 스택
 
-| 분류 | 기술 |
-|------|------|
-| Language | Python 3.12+ |
-| Framework | FastAPI, Pydantic v2 |
-| ORM | SQLAlchemy 2.0 (Async) + asyncpg |
-| LLM 통합 | LangChain (실시간), OpenAI/Anthropic/Google GenAI SDK (Batch API) |
-| Database | PostgreSQL (Supabase) |
-| Storage | Supabase Storage |
-| Cache | Redis |
-| Logging | Loguru, Slack Webhook |
-| 비밀 관리 | Infisical |
-| 패키지 관리 | uv |
-| 린트/포맷 | ruff |
-| 테스트 | pytest, pytest-asyncio |
-| AI 개발 도구 | Claude Code |
+| 분류        | 기술                                                             |
+| --------- | -------------------------------------------------------------- |
+| Language  | Python 3.12+                                                   |
+| Framework | FastAPI, Pydantic v2                                           |
+| ORM       | SQLAlchemy 2.0 (Async) + asyncpg                               |
+| LLM 통합    | LangChain (실시간), OpenAI/Anthropic/Google GenAI SDK (Batch API) |
+| Database  | PostgreSQL (Supabase)                                          |
+| Storage   | Supabase Storage                                               |
+| Cache     | Redis                                                          |
+| Logging   | Loguru, Slack Webhook                                          |
+| 비밀 관리     | Infisical                                                      |
+| 패키지 관리    | uv                                                             |
+| 린트/포맷     | ruff                                                           |
+| 테스트       | pytest, pytest-asyncio                                         |
+| AI 개발 도구  | Claude Code                                                    |
 
 ---
 
