@@ -1,6 +1,6 @@
 ---
 created: 2026-02-02
-updated: 2026-02-02
+updated: 2026-02-08
 tags: [meta, index]
 status: done
 ---
@@ -20,10 +20,23 @@ status: done
 
 ---
 
+## 이력서
+
+| 문서 | 설명 | 태그 | 상태 |
+|------|------|------|------|
+| [[이력서_백엔드_AI]] | 백엔드 + AI/LLM 포지션 이력서 | resume, backend, ai | draft |
+
+---
+
 ## 프로젝트 (projects/)
 
 | 문서 | 설명 | 태그 | 상태 |
 |------|------|------|------|
+| [[문제생성엔진]] | AI 기반 모의고사 문제 자동 생성 플랫폼 | backend, ai, llm | active |
+| [[QGen AI]] | 문제생성엔진 Python/FastAPI 마이그레이션 | backend, ai, python, langchain | active |
+| [[RAG 시스템]] | 문제 자동 생성 및 품질 평가 RAG 시스템 | backend, ai, rag | active |
+| [[똑스]] | 온라인 시험 및 학습 플랫폼 | fullstack, frontend, backend | active |
+| [[라스쿨]] | 강사-멘티-멘토 학습 관리 플랫폼 | backend, api | active |
 | [[Batch Processing]] | 배치 처리 서비스 레이어 시퀀스 다이어그램 | backend, api | active |
 
 ---
@@ -62,9 +75,10 @@ status: done
 
 ## 문서 통계
 
-- **총 문서 수**: 4개
+- **총 문서 수**: 10개
 - **메타 문서**: 2개
-- **프로젝트**: 1개
+- **이력서**: 1개
+- **프로젝트**: 6개
 - **노트**: 1개
 - **기술 의사결정**: 0개
 - **문제 해결**: 0개
