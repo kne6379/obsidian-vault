@@ -4,6 +4,12 @@ Obsidian과 Claude를 활용하여 AI 기반으로 지식을 정리하고 관리
 
 ---
 
+## 왜 Obsidian인가
+
+AI 에이전트가 문서 간 그래프 연결을 활용하여 지식에 기반한 답변과 작업을 수행할 수 있도록 하기 위해 Obsidian을 사용합니다. `[[위키링크]]`로 연결된 문서들은 에이전트가 관련 컨텍스트를 탐색하고 참조하는 데 유용합니다.
+
+---
+
 ## 구조
 
 ```
@@ -12,10 +18,6 @@ Obsidian과 Claude를 활용하여 AI 기반으로 지식을 정리하고 관리
 │   ├── concepts/     # 개념/이론 문서
 │   ├── _meta/        # 규칙, 용어집, 인덱스
 │   └── _templates/   # 문서 템플릿
-│
-└── work/             # 업무 문서
-    ├── projects/     # 프로젝트 설계/명세
-    └── notes/        # 미팅/리서치 노트
 ```
 
 ---
@@ -23,7 +25,6 @@ Obsidian과 Claude를 활용하여 AI 기반으로 지식을 정리하고 관리
 ## 문서 목록
 
 - [develop 문서 목록](develop/_meta/INDEX.md)
-- [work 문서 목록](work/_meta/INDEX.md)
 
 ---
 
