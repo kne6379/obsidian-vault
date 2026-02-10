@@ -23,23 +23,24 @@ status: draft
 - **Language**: TypeScript, Python
 - **Framework**: NestJS, FastAPI
 - **ORM**: TypeORM, SQLAlchemy 2.0
-- **Database**: PostgreSQL
-- **Vector**:  PostgreSQL (pgvector)
+- **Database**: PostgreSQL, MySQL
+- **Validation**: Zod, Pydantic v2
+- **Logging**: Winston, Loguru, Slack Webhook
 
-### AI/LLM Experience
-- **LLM**: Gemini, OpenAI, Claude
-- **LLM Routing**: OpenRouter
-- **Multimodal**: Gemini (이미지 생성, TTS)
+### AI/LLM
+- **LLM**: Gemini, OpenAI, Claude (OpenRouter)
+- **Vector DB**: PostgreSQL (pgvector)
 - **Framework**: LangChain
-- **AI Coding**: Claude Code, Cursor, Gemini CLI
+- **Multimodal**: Gemini (이미지 생성, TTS)
 
 ### Infra
 - **Cloud**: AWS EC2
-- **Storage**: Supabase Storage, S3
-- **Logging**: Winston, Morgan, Loguru, Slack Webhook
-- **Validation**: Zod, Pydantic v2
+- **Container**: Docker
+- **Storage**: S3, Supabase Storage
+
+### Tools
 - **Nocode**: Retool, Bubble
-- **Container**: Docker, Nginx
+- **AI Coding**: Claude Code, Cursor, Gemini CLI
 
 ---
 
