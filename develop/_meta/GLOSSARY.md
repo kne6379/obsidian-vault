@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-05
+updated: 2026-02-19
 tags: [meta, glossary]
 status: done
 ---
@@ -32,6 +32,8 @@ status: done
 
 ## ㄴ
 
+**낙관적 동시성 제어** (Optimistic Concurrency Control) - 충돌이 드물다는 가정하에 락 없이 작업을 수행하고, 커밋 시점에 충돌을 감지하여 처리하는 동시성 제어 방식. 버전 번호나 ETag를 활용
+
 ---
 
 ## ㄷ
@@ -47,6 +49,10 @@ status: done
 ---
 
 ## ㅁ
+
+**멱등성** (Idempotency) - 동일한 연산을 여러 번 수행해도 결과가 한 번 수행한 것과 동일한 성질. 분산 시스템에서 안전한 재시도와 데이터 일관성을 보장하는 핵심 원칙
+
+**멱등성 키** (Idempotency Key) - 클라이언트가 생성하는 고유 식별자로, 서버가 동일 요청의 재시도를 감지하고 중복 처리를 방지하는 데 사용
 
 ---
 
@@ -161,6 +167,8 @@ status: done
 **LLM** (Large Language Model) - 대규모 텍스트 데이터로 학습된 자연어 처리 인공지능 모델
 
 **MSA** (Microservices Architecture) - 애플리케이션을 독립적으로 배포 가능한 작은 서비스들의 집합으로 구성하는 아키텍처 스타일
+
+**UPSERT** - INSERT와 UPDATE의 합성어. 레코드가 존재하면 갱신하고, 존재하지 않으면 삽입하는 원자적 데이터베이스 연산. 멱등적 데이터 처리에 활용
 
 ---
 
