@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-19
+updated: 2026-02-20
 tags: [meta, glossary]
 status: done
 ---
@@ -147,6 +147,8 @@ status: done
 **API** (Application Programming Interface) - 소프트웨어 간 상호작용을 위한 인터페이스 정의
 
 **API Gateway** - MSA에서 클라이언트와 내부 서비스 사이의 단일 진입점. 라우팅, 인증, 트래픽 제어 등 공통 기능을 처리
+
+**ASGI** (Asynchronous Server Gateway Interface) - 파이썬 비동기 웹 애플리케이션과 서버 간의 표준 인터페이스. WSGI의 비동기 확장으로, 웹소켓과 스트리밍을 지원
 
 **BFF** (Backend for Frontend) - 클라이언트 유형(웹, 모바일 등)별로 최적화된 API를 제공하기 위해 게이트웨이를 분리하는 패턴
 
