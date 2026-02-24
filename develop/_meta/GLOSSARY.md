@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-20
+updated: 2026-02-24
 tags: [meta, glossary]
 status: done
 ---
@@ -142,6 +142,12 @@ status: done
 
 ---
 
+## ㅎ~
+
+**HCL** (HashiCorp Configuration Language) - HashiCorp이 개발한 Terraform 전용 설정 언어. JSON보다 읽기 쉬운 선언형 문법을 제공
+
+---
+
 ## A-Z
 
 **API** (Application Programming Interface) - 소프트웨어 간 상호작용을 위한 인터페이스 정의
@@ -150,7 +156,11 @@ status: done
 
 **ASGI** (Asynchronous Server Gateway Interface) - 파이썬 비동기 웹 애플리케이션과 서버 간의 표준 인터페이스. WSGI의 비동기 확장으로, 웹소켓과 스트리밍을 지원
 
+**AWS CDK** (Cloud Development Kit) - 프로그래밍 언어(TypeScript, Python 등)로 AWS 인프라를 정의하는 IaC 프레임워크. 내부적으로 CloudFormation 템플릿을 생성
+
 **BFF** (Backend for Frontend) - 클라이언트 유형(웹, 모바일 등)별로 최적화된 API를 제공하기 위해 게이트웨이를 분리하는 패턴
+
+**CloudFormation** - AWS 네이티브 IaC 서비스. JSON/YAML 템플릿으로 AWS 리소스를 선언적으로 프로비저닝하고 관리
 
 **Docker** - 컨테이너 기반 애플리케이션 배포 및 관리를 위한 오픈소스 플랫폼
 
@@ -162,13 +172,19 @@ status: done
 
 **Fargate** - AWS의 서버리스 컨테이너 컴퓨팅 엔진. ECS/EKS와 함께 사용하여 인프라 관리 없이 컨테이너 실행
 
+**IaC** (Infrastructure as Code) - 인프라를 코드로 정의하고 버전 관리하여, 수동 작업 없이 일관되게 프로비저닝하는 방법론
+
 **IPC** (Inter-Process Communication) - 프로세스 간 데이터를 주고받는 통신 기법. 파이프, 소켓, 공유 메모리 등이 있음
 
 **JSONL** (JSON Lines) - 각 줄이 하나의 JSON 객체인 텍스트 형식. 배치 API에서 대량 요청/응답 처리에 사용
 
+**L1/L2/L3 Construct** - AWS CDK의 추상화 수준. L1은 CloudFormation 1:1 대응, L2는 합리적 기본값 제공, L3는 여러 리소스를 조합한 아키텍처 패턴
+
 **LLM** (Large Language Model) - 대규모 텍스트 데이터로 학습된 자연어 처리 인공지능 모델
 
 **MSA** (Microservices Architecture) - 애플리케이션을 독립적으로 배포 가능한 작은 서비스들의 집합으로 구성하는 아키텍처 스타일
+
+**Terraform** - HashiCorp이 개발한 오픈소스 IaC 도구. HCL 문법으로 멀티 클라우드 인프라를 선언적으로 관리
 
 **UPSERT** - INSERT와 UPDATE의 합성어. 레코드가 존재하면 갱신하고, 존재하지 않으면 삽입하는 원자적 데이터베이스 연산. 멱등적 데이터 처리에 활용
 

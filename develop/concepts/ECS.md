@@ -152,6 +152,9 @@ ECS Cluster
 
 - [[Docker]] - ECS가 오케스트레이션하는 컨테이너 기술
 - [[API Gateway]] - ECS 서비스 앞단에 배치하여 라우팅/인증 처리
+- [[IaC]] - ECS 인프라를 코드로 관리하는 방법론
+- [[Terraform]] - ECS를 프로비저닝하는 대표적 IaC 도구
+- [[CloudFormation]] - AWS 네이티브 IaC로 ECS 관리
 
 ---
 

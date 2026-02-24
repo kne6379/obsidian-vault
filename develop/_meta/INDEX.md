@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-20
+updated: 2026-02-24
 tags: [meta, index]
 status: done
 ---
@@ -45,6 +45,10 @@ status: done
 | [[멱등성]] | 분산 시스템에서 안전한 재시도를 보장하는 설계 원칙 | backend, api, database, architecture | done |
 | [[ASGI 응답 프로토콜]] | ASGI 2단계 응답 전송과 send_wrapper 패턴 | backend, api | done |
 | [[배치 서비스 아키텍처]] | 배치 문제 생성 시스템 역할 분리 및 벌크 처리 | backend, design, architecture | done |
+| [[IaC]] | 인프라를 코드로 정의하고 관리하는 방법론 | devops, cloud, infrastructure | done |
+| [[Terraform]] | HCL 기반 멀티 클라우드 IaC 도구 | devops, cloud, infrastructure | done |
+| [[AWS CDK]] | 프로그래밍 언어 기반 AWS IaC 프레임워크 | devops, cloud, infrastructure | done |
+| [[CloudFormation]] | AWS 네이티브 IaC 서비스 | devops, cloud, infrastructure | done |
 
 ---
 
@@ -74,9 +78,9 @@ status: done
 
 ## 문서 통계
 
-- **총 문서 수**: 15개
+- **총 문서 수**: 19개
 - **메타 문서**: 3개
-- **개념 문서**: 12개
+- **개념 문서**: 16개
 - **튜토리얼**: 0개
 - **문제 해결**: 0개
 - **참고 자료**: 0개
@@ -87,6 +91,10 @@ status: done
 
 | 날짜 | 문서 | 변경 내용 |
 |------|------|----------|
+| 2026-02-24 | [[IaC]] | 초기 작성 |
+| 2026-02-24 | [[Terraform]] | 초기 작성 |
+| 2026-02-24 | [[AWS CDK]] | 초기 작성 |
+| 2026-02-24 | [[CloudFormation]] | 초기 작성 |
 | 2026-02-20 | [[ASGI 응답 프로토콜]] | 초기 작성 |
 | 2026-02-19 | [[멱등성]] | 초기 작성 |
 | 2026-02-05 | [[배치 서비스 아키텍처]] | 초기 작성 |
