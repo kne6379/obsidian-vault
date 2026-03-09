@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-24
+updated: 2026-03-08
 tags: [meta, index]
 status: done
 ---
@@ -34,8 +34,10 @@ status: done
 | 문서 | 설명 | 태그 | 상태 |
 |------|------|------|------|
 | [[RAG]] | 검색 증강 생성 기술 | ai, llm, rag | done |
+| [[AI 네이티브 엔지니어]] | AI 에이전트를 관리하며 개발하는 엔지니어 역량과 생존 전략 | ai, career | done |
 | [[API Gateway]] | MSA 단일 진입점, 라우팅/인증/트래픽 제어 | backend, api, msa | done |
 | [[Docker]] | 컨테이너 기반 배포 플랫폼 | devops, docker | done |
+| [[ECR]] | AWS 완전 관리형 컨테이너 이미지 레지스트리 | devops, cloud, container | done |
 | [[ECS]] | AWS 완전 관리형 컨테이너 오케스트레이션 | devops, cloud, container | done |
 | [[GraphRAG]] | 지식 그래프 기반 검색 증강 생성 | ai, llm, rag | done |
 | [[SOLID]] | 객체지향 설계 5원칙 | oop, design | done |
@@ -44,6 +46,7 @@ status: done
 | [[디자인 패턴 비교]] | Provider, Strategy, Factory 패턴 비교 | oop, design, backend | done |
 | [[멱등성]] | 분산 시스템에서 안전한 재시도를 보장하는 설계 원칙 | backend, api, database, architecture | done |
 | [[ASGI 응답 프로토콜]] | ASGI 2단계 응답 전송과 send_wrapper 패턴 | backend, api | done |
+| [[NestJS 레포지토리 패턴]] | @InjectRepository() vs 커스텀 @Injectable() 레포지토리 비교 | backend, design | done |
 | [[배치 서비스 아키텍처]] | 배치 문제 생성 시스템 역할 분리 및 벌크 처리 | backend, design, architecture | done |
 | [[IaC]] | 인프라를 코드로 정의하고 관리하는 방법론 | devops, cloud, infrastructure | done |
 | [[Terraform]] | HCL 기반 멀티 클라우드 IaC 도구 | devops, cloud, infrastructure | done |
@@ -78,9 +81,9 @@ status: done
 
 ## 문서 통계
 
-- **총 문서 수**: 19개
+- **총 문서 수**: 22개
 - **메타 문서**: 3개
-- **개념 문서**: 16개
+- **개념 문서**: 19개
 - **튜토리얼**: 0개
 - **문제 해결**: 0개
 - **참고 자료**: 0개
@@ -91,6 +94,9 @@ status: done
 
 | 날짜 | 문서 | 변경 내용 |
 |------|------|----------|
+| 2026-03-08 | [[NestJS 레포지토리 패턴]] | 초기 작성 |
+| 2026-03-08 | [[ECR]] | 초기 작성 |
+| 2026-03-08 | [[AI 네이티브 엔지니어]] | 초기 작성 |
 | 2026-02-24 | [[IaC]] | 초기 작성 |
 | 2026-02-24 | [[Terraform]] | 초기 작성 |
 | 2026-02-24 | [[AWS CDK]] | 초기 작성 |

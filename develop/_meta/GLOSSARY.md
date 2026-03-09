@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-02-24
+updated: 2026-03-08
 tags: [meta, glossary]
 status: done
 ---
@@ -44,6 +44,8 @@ status: done
 
 ## ㄹ
 
+**레포지토리 패턴** (Repository Pattern) - 데이터 접근 로직을 비즈니스 로직으로부터 분리하여 별도의 계층에 캡슐화하는 설계 패턴. NestJS에서는 @Injectable() 기반 커스텀 레포지토리로 구현
+
 **리랭킹** (Re-ranking) - 초기 검색 결과를 재정렬하여 가장 관련성 높은 문서를 선별하는 기법
 
 ---
@@ -81,6 +83,8 @@ status: done
 ---
 
 ## ㅇ
+
+**에이전트 친화적 코드베이스** (Agent-Friendly Codebase) - AI 에이전트가 효과적으로 작업할 수 있도록 명확한 테스트, 코드-문서 일치, 일관된 디자인 패턴을 갖춘 코드베이스
 
 **일반화** (Generalization) - 여러 구체적인 대상들로부터 공통점을 추출하여 상위 개념을 형성하는 과정. 상속이나 부모 클래스로 구현
 
@@ -149,6 +153,8 @@ status: done
 ---
 
 ## A-Z
+
+**AI 네이티브 엔지니어** (AI-Native Engineer) - AI 에이전트를 다수의 인턴처럼 관리하며 소프트웨어를 개발하는 새로운 유형의 엔지니어. 점진적 에이전트 관리, 컨텍스트 스위칭, 에이전트 친화적 코드베이스 설계가 핵심 역량
 
 **API** (Application Programming Interface) - 소프트웨어 간 상호작용을 위한 인터페이스 정의
 
