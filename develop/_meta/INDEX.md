@@ -38,6 +38,7 @@ status: done
 | [[API Gateway]] | MSA 단일 진입점, 라우팅/인증/트래픽 제어 | backend, api, msa | done |
 | [[Docker]] | 컨테이너 기반 배포 플랫폼 | devops, docker | done |
 | [[ECR]] | AWS 완전 관리형 컨테이너 이미지 레지스트리 | devops, cloud, container | done |
+| [[GitHub 기술 인사이트 탐색법]] | GitHub로 기술 동향 파악 및 레포지토리 건강도 평가 | reference, career | done |
 | [[ECS]] | AWS 완전 관리형 컨테이너 오케스트레이션 | devops, cloud, container | done |
 | [[GraphRAG]] | 지식 그래프 기반 검색 증강 생성 | ai, llm, rag | done |
 | [[SOLID]] | 객체지향 설계 5원칙 | oop, design | done |
@@ -81,9 +82,9 @@ status: done
 
 ## 문서 통계
 
-- **총 문서 수**: 22개
+- **총 문서 수**: 23개
 - **메타 문서**: 3개
-- **개념 문서**: 19개
+- **개념 문서**: 20개
 - **튜토리얼**: 0개
 - **문제 해결**: 0개
 - **참고 자료**: 0개
@@ -94,6 +95,7 @@ status: done
 
 | 날짜 | 문서 | 변경 내용 |
 |------|------|----------|
+| 2026-03-08 | [[GitHub 기술 인사이트 탐색법]] | 초기 작성 |
 | 2026-03-08 | [[NestJS 레포지토리 패턴]] | 초기 작성 |
 | 2026-03-08 | [[ECR]] | 초기 작성 |
 | 2026-03-08 | [[AI 네이티브 엔지니어]] | 초기 작성 |
