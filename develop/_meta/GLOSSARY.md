@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-03-08
+updated: 2026-03-10
 tags: [meta, glossary]
 status: done
 ---
@@ -118,6 +118,8 @@ status: done
 
 ## ㅋ
 
+**쿠버네티스** (Kubernetes, K8s) - Google이 개발하고 CNCF가 관리하는 오픈소스 컨테이너 오케스트레이션 플랫폼. 컨테이너의 배포, 확장, 자가 복구를 자동화
+
 ---
 
 ## ㅌ
@@ -174,7 +176,7 @@ status: done
 
 **ECS** (Elastic Container Service) - AWS의 완전 관리형 컨테이너 오케스트레이션 서비스
 
-**EKS** (Elastic Kubernetes Service) - AWS의 관리형 Kubernetes 서비스
+**EKS** (Elastic Kubernetes Service) - AWS의 관리형 Kubernetes 서비스. 쿠버네티스 컨트롤 플레인을 AWS가 관리
 
 **Fargate** - AWS의 서버리스 컨테이너 컴퓨팅 엔진. ECS/EKS와 함께 사용하여 인프라 관리 없이 컨테이너 실행
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-03-08
+updated: 2026-03-10
 tags: [meta, index]
 status: done
 ---
@@ -53,6 +53,7 @@ status: done
 | [[Terraform]] | HCL 기반 멀티 클라우드 IaC 도구 | devops, cloud, infrastructure | done |
 | [[AWS CDK]] | 프로그래밍 언어 기반 AWS IaC 프레임워크 | devops, cloud, infrastructure | done |
 | [[CloudFormation]] | AWS 네이티브 IaC 서비스 | devops, cloud, infrastructure | done |
+| [[쿠버네티스]] | 컨테이너 오케스트레이션 오픈소스 플랫폼 | devops, k8s, cloud, container | done |
 
 ---
 
@@ -82,9 +83,9 @@ status: done
 
 ## 문서 통계
 
-- **총 문서 수**: 23개
+- **총 문서 수**: 24개
 - **메타 문서**: 3개
-- **개념 문서**: 20개
+- **개념 문서**: 21개
 - **튜토리얼**: 0개
 - **문제 해결**: 0개
 - **참고 자료**: 0개
@@ -95,6 +96,7 @@ status: done
 
 | 날짜 | 문서 | 변경 내용 |
 |------|------|----------|
+| 2026-03-10 | [[쿠버네티스]] | 초기 작성 |
 | 2026-03-08 | [[GitHub 기술 인사이트 탐색법]] | 초기 작성 |
 | 2026-03-08 | [[NestJS 레포지토리 패턴]] | 초기 작성 |
 | 2026-03-08 | [[ECR]] | 초기 작성 |
