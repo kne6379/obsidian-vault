@@ -99,6 +99,7 @@ status: draft | review | done
 - `devops`, `docker`, `k8s` - 인프라/배포 관련
 - `backend`, `frontend` - 개발 영역
 - `database`, `api` - 기술 스택
+- `tools`, `terminal` - 개발 도구/환경
 
 **상태 태그**
 - `draft` - 초안 작성 중

@@ -73,5 +73,6 @@ develop/
 - AI/데이터: `ai`, `llm`, `rag`, `embedding`, `mlops`
 - 인프라: `devops`, `docker`, `k8s`, `cloud`, `cicd`
 - 개발: `backend`, `frontend`, `database`, `api`, `security`
+- 도구/환경: `tools`, `terminal`
 
 **상태**: `draft`, `review`, `done`

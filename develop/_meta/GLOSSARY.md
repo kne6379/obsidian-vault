@@ -186,6 +186,8 @@ status: done
 
 **Fargate** - AWS의 서버리스 컨테이너 컴퓨팅 엔진. ECS/EKS와 함께 사용하여 인프라 관리 없이 컨테이너 실행
 
+**Ghostty** - Mitchell Hashimoto(HashiCorp 창업자)가 개발한 GPU 가속 터미널 에뮬레이터. 네이티브 UI와 높은 성능을 동시에 제공
+
 **IaC** (Infrastructure as Code) - 인프라를 코드로 정의하고 버전 관리하여, 수동 작업 없이 일관되게 프로비저닝하는 방법론
 
 **IPC** (Inter-Process Communication) - 프로세스 간 데이터를 주고받는 통신 기법. 파이프, 소켓, 공유 메모리 등이 있음
