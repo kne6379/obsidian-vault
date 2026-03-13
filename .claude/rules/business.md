@@ -26,7 +26,7 @@ paths: ["business/**"]
 
 ## 메타데이터
 
-브레인스토밍 문서는 `domain` 필드를 포함합니다:
+브레인스토밍 문서는 `domain` 필드를 포함한다:
 
 ```yaml
 created: YYYY-MM-DD
