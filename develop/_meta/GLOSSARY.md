@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-03-10
+updated: 2026-03-13
 tags: [meta, glossary]
 status: done
 ---
@@ -108,6 +108,8 @@ status: done
 
 ## ㅊ
 
+**컨텍스트 윈도우** (Context Window) - LLM이 한 번에 처리할 수 있는 입력 토큰의 최대 범위. Claude Code에서는 대화 내용, CLAUDE.md, 파일 내용 등이 이 윈도우를 공유
+
 **컨텍스트 스위칭** (Context Switching) - CPU가 한 프로세스/스레드에서 다른 것으로 전환할 때 상태를 저장하고 복원하는 과정
 
 **컨테이너** (Container) - 애플리케이션과 그 실행 환경을 격리된 단위로 패키징하는 가상화 기술
@@ -163,6 +165,10 @@ status: done
 **API Gateway** - MSA에서 클라이언트와 내부 서비스 사이의 단일 진입점. 라우팅, 인증, 트래픽 제어 등 공통 기능을 처리
 
 **ASGI** (Asynchronous Server Gateway Interface) - 파이썬 비동기 웹 애플리케이션과 서버 간의 표준 인터페이스. WSGI의 비동기 확장으로, 웹소켓과 스트리밍을 지원
+
+**CLAUDE.md** - Claude Code가 세션 시작 시 읽어들이는 지시 컨텍스트 파일. 프로젝트 규칙, 빌드 명령어, 아키텍처 결정 등을 담아 AI 에이전트의 일관된 작업을 유도
+
+**Compaction** - Claude Code에서 컨텍스트 윈도우가 가득 찼을 때 이전 대화를 압축하는 과정. CLAUDE.md 내용은 디스크에서 재주입되어 생존하지만, 대화 중 읽은 파일 내용은 소실
 
 **AWS CDK** (Cloud Development Kit) - 프로그래밍 언어(TypeScript, Python 등)로 AWS 인프라를 정의하는 IaC 프레임워크. 내부적으로 CloudFormation 템플릿을 생성
 
