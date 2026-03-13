@@ -59,4 +59,4 @@ paths: ["work/**"]
 
 ## 작업 전 필수 확인
 
-- 새 문서 작성 전 반드시 `work/_meta/INDEX.md`를 읽어 중복을 방지한다.
+- 새 문서 작성 전 반드시 `work/_meta/INDEX.md`를 읽어 중복을 방지합니다.

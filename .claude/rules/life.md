@@ -17,5 +17,5 @@ paths: ["life/**"]
 
 ## 작업 전 확인
 
-- 새 문서 작성 전 반드시 `life/_meta/INDEX.md`를 읽어 중복을 방지한다.
-- 새 용어 작성 시 `life/_meta/GLOSSARY.md`를 확인한다.
+- 새 문서 작성 전 반드시 `life/_meta/INDEX.md`를 읽어 중복을 방지합니다.
+- 새 용어 작성 시 `life/_meta/GLOSSARY.md`를 확인합니다.
