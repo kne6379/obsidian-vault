@@ -37,11 +37,12 @@
 
 ## 페르소나
 
-IMPORTANT: 조언할 때는 형처럼 직설적으로 한다.
+IMPORTANT: 조언이나 피드백을 줄 때는 형처럼 직설적으로 한다.
 - 반말 사용
 - 핵심만 말함
 - 필요하면 쓴소리도 함
 - 둘러 말하지 않음
+- 단, 문서를 작성할 때는 공통 규칙(~니다 체)을 따른다.
 
 ## 볼트 구조
 
@@ -84,6 +85,7 @@ IMPORTANT: 조언할 때는 형처럼 직설적으로 한다.
 - 프론트매터: created, updated, tags, status YAML 형식.
 - 링크: 내부 [[문서명]], 하단 ## 관련 문서, 외부 ## 참고 자료.
 - 품질: 사내 보고서 수준. 추측/모호 표현 금지.
+- 영역 인식: 작업 대상 영역이 명확하면 해당 영역의 파일을 먼저 읽거나 편집하여 영역별 규칙이 자동 로드되도록 한다.
 
 #### 2.2 develop.md
 
@@ -95,9 +97,12 @@ paths: ["develop/**"]
 
 내용 — `develop/_meta/RULES.md`에서 이동:
 
+- 영역 소개 (AI/데이터, 인프라/클라우드, 백엔드, 프론트엔드)
 - 문서 유형별 섹션 구조 (개념, 튜토리얼, 문제 해결)
 - 태그 체계 (유형 + 주제 + 상태)
-- 품질 기준 체크리스트
+- 작성 스타일 세부 (분량/구조 가이드, 명확성 기준)
+- 품질 기준 체크리스트 + 지양 사항
+- 지시: 새 문서 작성 시 `develop/_templates/CONCEPT.md` 템플릿을 기반으로 한다.
 - 지시: 새 문서 작성 전 반드시 `develop/_meta/INDEX.md`를 읽어 중복을 방지한다.
 - 지시: 새 용어 작성 시 `develop/_meta/GLOSSARY.md`를 확인한다.
 
@@ -155,6 +160,7 @@ paths: ["business/**"]
 - 아이디어 평가 기준 (실현 가능성/시장성/차별성 5점 척도)
 - 태그 체계
 - 영역 간 링크 규칙 (develop/, work/ 적극 연결)
+- 지시: 새 문서 작성 시 `business/_templates/BRAINSTORM.md` 템플릿을 기반으로 한다.
 - 지시: 새 문서 작성 전 반드시 `business/_meta/INDEX.md`를 읽어 중복을 방지한다.
 - 지시: 새 용어 작성 시 `business/_meta/GLOSSARY.md`를 확인한다.
 
@@ -178,23 +184,22 @@ paths: ["business/**"]
 
 ### 5. 커맨드 파일 수정
 
-#### 5.1 `.claude/commands/write.md`
+확인 결과 커맨드 파일들은 `_meta/RULES.md`를 직접 참조하지 않는다. 주요 변경은 없으며, 기존 동작을 유지한다.
 
-- `_meta/RULES.md` 참조 제거 (`.claude/rules/`가 자동 로드)
+#### 5.1 `.claude/commands/write.md` — 변경 없음
+
 - `_templates/CONCEPT.md` 템플릿 경로 유지
 - INDEX/GLOSSARY 업데이트 지시 유지 (실제 액션)
 
-#### 5.2 `.claude/commands/brainstorm.md`
+#### 5.2 `.claude/commands/brainstorm.md` — 변경 없음
 
-- `_meta/RULES.md` 참조 제거
 - `_templates/BRAINSTORM.md` 템플릿 경로 유지
 - INDEX/GLOSSARY 업데이트 지시 유지
 
-#### 5.3 `.claude/commands/analyze.md`
+#### 5.3 `.claude/commands/analyze.md` — 변경 없음
 
-- `_meta/INDEX.md` 읽기 지시 유지 (분석 대상이므로)
+- `_meta/INDEX.md` 읽기 지시 유지 (분석 대상)
 - 페르소나 세부 지시 유지 (분석 시 톤 지정)
-- 변경 최소화
 
 ### 6. Obsidian 설정
 
@@ -230,8 +235,7 @@ Obsidian Vault/
 │   └── references/
 ├── work/
 │   ├── _meta/
-│   │   └── INDEX.md             # 유지
-│   ├── _templates/
+│   │   └── INDEX.md             # 유지 (GLOSSARY 없음)
 │   └── ...
 ├── life/
 │   ├── _meta/
@@ -256,6 +260,21 @@ Obsidian Vault/
 | life/ 문서 작성 | + life.md → INDEX/GLOSSARY는 필요 시 읽기 |
 | business/ 브레인스토밍 | + business.md → INDEX/GLOSSARY는 필요 시 읽기 |
 | /analyze 실행 | + analyze.md 커맨드 로드 |
+
+## 구현 순서
+
+안전한 마이그레이션을 위해 다음 순서를 따른다:
+
+1. `.claude/rules/` 파일 생성 (새 규칙 소스 확보)
+2. 루트 CLAUDE.md 재작성
+3. 하위 CLAUDE.md 삭제 (`develop/CLAUDE.md`, `business/CLAUDE.md`)
+4. `_meta/RULES.md` 삭제 (4개 영역)
+5. 검증: Claude Code 새 세션에서 규칙 로딩 확인
+
+## 비고
+
+- `work/_meta/`에는 GLOSSARY.md가 존재하지 않는다. 이는 현재 상태 그대로 유지한다.
+- 하위 CLAUDE.md에 있던 영역 소개 테이블(주제 분류)은 각 영역 rules 파일 상단에 통합한다.
 
 ## 리팩토링 범위 외 (다음 작업)
 
