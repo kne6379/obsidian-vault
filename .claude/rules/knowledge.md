@@ -1,8 +1,8 @@
 ---
-paths: ["develop/**"]
+paths: ["knowledge/**"]
 ---
 
-# develop 영역 규칙
+# knowledge 영역 규칙
 
 ## 다루는 주제
 
@@ -71,6 +71,6 @@ paths: ["develop/**"]
 
 ## 작업 전 필수 확인
 
-- 새 문서 작성 시 `develop/_templates/CONCEPT.md` 템플릿을 기반으로 합니다.
-- 새 문서 작성 전 반드시 `develop/_meta/INDEX.md`를 읽어 중복을 방지합니다.
-- 새 용어 작성 시 `develop/_meta/GLOSSARY.md`를 확인합니다.
+- 새 문서 작성 시 `knowledge/_templates/CONCEPT.md` 템플릿을 기반으로 합니다.
+- 새 문서 작성 전 반드시 `knowledge/_meta/INDEX.md`를 읽어 중복을 방지합니다.
+- 새 용어 작성 시 `knowledge/_meta/GLOSSARY.md`를 확인합니다.

@@ -1,8 +1,8 @@
 ---
-paths: ["business/**"]
+paths: ["ventures/**"]
 ---
 
-# business 영역 규칙
+# ventures 영역 규칙
 
 ## 영역 소개
 
@@ -70,12 +70,12 @@ domain: 대상 산업/분야
 
 ## 영역 간 링크 규칙
 
-- develop/ 영역의 관련 기술 문서와 적극적으로 연결합니다.
-- work/ 영역의 실무 경험과 연결 가능하면 링크합니다.
+- knowledge/ 영역의 관련 기술 문서와 적극적으로 연결합니다.
+- projects/ 영역의 실무 경험과 연결 가능하면 링크합니다.
 - 동일 영역 내 유사 브레인스토밍 문서끼리도 연결합니다.
 
 ## 작업 전 필수 확인
 
-- 새 문서 작성 시 `business/_templates/BRAINSTORM.md` 템플릿을 기반으로 합니다.
-- 새 문서 작성 전 반드시 `business/_meta/INDEX.md`를 읽어 중복을 방지합니다.
-- 새 용어 작성 시 `business/_meta/GLOSSARY.md`를 확인합니다.
+- 새 문서 작성 시 `ventures/_templates/BRAINSTORM.md` 템플릿을 기반으로 합니다.
+- 새 문서 작성 전 반드시 `ventures/_meta/INDEX.md`를 읽어 중복을 방지합니다.
+- 새 용어 작성 시 `ventures/_meta/GLOSSARY.md`를 확인합니다.

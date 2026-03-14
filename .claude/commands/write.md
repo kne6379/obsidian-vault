@@ -7,7 +7,7 @@ description: 새 개념 문서 작성 + 검수 + 등록 + 푸시
 ## 실행 순서
 
 1. **문서 작성**
-   - develop/concepts/$ARGUMENTS.md 생성
+   - knowledge/concepts/$ARGUMENTS.md 생성
    - _templates/CONCEPT.md 템플릿 기반
    - 웹 검색으로 내용 조사 후 작성
 
@@ -18,12 +18,12 @@ description: 새 개념 문서 작성 + 검수 + 등록 + 푸시
    - 링크 유효성 확인
 
 3. **인덱스 업데이트**
-   - develop/_meta/INDEX.md에 문서 추가
+   - knowledge/_meta/INDEX.md에 문서 추가
    - 통계 업데이트
    - 최근 업데이트 섹션 추가
 
 4. **용어집 업데이트**
-   - 새 용어가 있으면 develop/_meta/GLOSSARY.md에 추가
+   - 새 용어가 있으면 knowledge/_meta/GLOSSARY.md에 추가
 
 5. **관련 문서 링크**
    - 기존 관련 문서에 상호 링크 추가

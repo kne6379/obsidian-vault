@@ -42,18 +42,18 @@ $ARGUMENTS 해석:
 
 ### 5. 문서 작성
 
-business/brainstorms/ 하위에 문서를 생성합니다:
+ventures/brainstorms/ 하위에 문서를 생성합니다:
 - 파일명: `YYYY-MM-DD $ARGUMENTS.md`
-- business/_templates/BRAINSTORM.md 템플릿 기반
+- ventures/_templates/BRAINSTORM.md 템플릿 기반
 
 ### 6. 인덱스 업데이트
 
-- business/_meta/INDEX.md에 문서 추가
-- 새 용어가 있으면 business/_meta/GLOSSARY.md에 추가
+- ventures/_meta/INDEX.md에 문서 추가
+- 새 용어가 있으면 ventures/_meta/GLOSSARY.md에 추가
 
 ### 7. 관련 문서 링크
 
-- 볼트 내 관련 문서 탐색 (develop/, work/ 포함)
+- 볼트 내 관련 문서 탐색 (knowledge/, projects/ 포함)
 - 양방향 링크 연결
 
 ### 8. Git 커밋 & 푸시
@@ -79,7 +79,7 @@ business/brainstorms/ 하위에 문서를 생성합니다:
 ### 다음 단계 제안
 - ...
 
-📄 상세 문서: business/brainstorms/YYYY-MM-DD 주제.md
+📄 상세 문서: ventures/brainstorms/YYYY-MM-DD 주제.md
 ```
 
 ## 주의사항

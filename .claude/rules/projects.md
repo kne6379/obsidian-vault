@@ -1,8 +1,8 @@
 ---
-paths: ["work/**"]
+paths: ["projects/**"]
 ---
 
-# work 영역 규칙
+# projects 영역 규칙
 
 ## 문서 유형별 섹션 구조
 
@@ -59,4 +59,8 @@ paths: ["work/**"]
 
 ## 작업 전 필수 확인
 
-- 새 문서 작성 전 반드시 `work/_meta/INDEX.md`를 읽어 중복을 방지합니다.
+- 새 프로젝트 문서 작성 시 `projects/_templates/PROJECT.md` 템플릿을 기반으로 합니다.
+- 새 의사결정 문서 작성 시 `projects/_templates/DECISION.md` 템플릿을 기반으로 합니다.
+- 새 노트 작성 시 `projects/_templates/NOTE.md` 템플릿을 기반으로 합니다.
+- 새 문서 작성 전 반드시 `projects/_meta/INDEX.md`를 읽어 중복을 방지합니다.
+- 새 용어 작성 시 `projects/_meta/GLOSSARY.md`를 확인합니다.

@@ -18,9 +18,9 @@ IMPORTANT: 조언이나 피드백을 줄 때는 형처럼 직설적으로 합니
 
 | 영역 | 목적 | 공개 |
 |------|------|------|
-| develop/ | 개발 지식 | 공개 |
-| work/ | 회사 프로젝트 | 공개 |
+| knowledge/ | 지식 저장소 | 공개 |
+| ventures/ | 사업 기획 | 공개 |
+| projects/ | 프로젝트 | 비공개 |
 | life/ | 생각, 가치관, 삶 | 비공개 |
-| business/ | AI 사업 기획 | 비공개 |
 
 각 영역은 _meta/ (INDEX, GLOSSARY), _templates/ 구조를 가집니다.
