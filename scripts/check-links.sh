@@ -4,7 +4,8 @@
 # pre-commit hook에서 호출됨
 
 VAULT_DIR="$(git rev-parse --show-toplevel)"
-BROKEN=0
+TMPFILE=$(mktemp)
+trap "rm -f $TMPFILE" EXIT
 
 # 볼트 내 전체 .md 파일명 목록 (확장자 제외)
 ALL_NAMES=$(find "$VAULT_DIR" -name "*.md" \
@@ -14,17 +15,23 @@ ALL_NAMES=$(find "$VAULT_DIR" -name "*.md" \
 # 스테이징된 .md 파일만 검사
 STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep "\.md$")
 
-for file in $STAGED; do
+while IFS= read -r file; do
+    [ -z "$file" ] && continue
     [ -f "$VAULT_DIR/$file" ] || continue
-    LINKS=$(grep -oE '\[\[[^]]+\]\]' "$VAULT_DIR/$file" \
-      | sed 's/\[\[//;s/\]\]//' | sed 's/|.*//' | sed 's/#.*//')
-    for link in $LINKS; do
-        echo "$ALL_NAMES" | grep -qx "$link" || {
+    # 링크 추출 후 한 줄씩 처리
+    grep -oE '\[\[[^]]+\]\]' "$VAULT_DIR/$file" \
+      | sed 's/\[\[//;s/\]\]//' | sed 's/|.*//' | sed 's/#.*//' \
+      | while IFS= read -r link; do
+        [ -z "$link" ] && continue
+        echo "$ALL_NAMES" | grep -qxF "$link" || {
             echo "BROKEN: $file -> [[$link]]"
-            BROKEN=$((BROKEN + 1))
         }
     done
-done
+done <<< "$STAGED" > "$TMPFILE"
 
-[ $BROKEN -gt 0 ] && echo "$BROKEN개의 끊어진 링크 발견"
+BROKEN=$(wc -l < "$TMPFILE" | tr -d ' ')
+if [ "$BROKEN" -gt 0 ]; then
+    cat "$TMPFILE"
+    echo "${BROKEN}개의 끊어진 링크 발견"
+fi
 exit 0
