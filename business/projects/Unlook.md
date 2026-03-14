@@ -166,35 +166,75 @@ pref = normalize(pref)
 
 ---
 
-## 7. 기술 스택
+## 7. 프로젝트 구조
 
-### 7.1 클라이언트
+### 7.1 팀 구성
+
+| 역할 | 담당 영역 | 작업 경로 |
+|------|-----------|-----------|
+| 프론트엔드 | Flutter 앱 (iOS/Android) | `apps/mobile/` |
+| 백엔드 | FastAPI + ML 파이프라인 | `services/api/` |
+
+### 7.2 모노레포 구조
+
+```
+unlook/
+├── CLAUDE.md                    ← AI 작업 지침
+├── .github/
+│   └── workflows/
+│       ├── api.yml              ← services/** 변경 시 트리거
+│       └── mobile.yml           ← apps/** 변경 시 트리거
+├── apps/
+│   └── mobile/                  ← Flutter (Dart)
+│       ├── lib/
+│       ├── pubspec.yaml
+│       └── ...
+├── services/
+│   └── api/                     ← FastAPI (Python)
+│       ├── app/
+│       │   ├── main.py
+│       │   ├── routers/
+│       │   ├── models/
+│       │   ├── services/
+│       │   └── ml/              ← ML 파이프라인
+│       ├── requirements.txt
+│       └── Dockerfile
+├── docs/
+│   ├── api-spec/                ← OpenAPI 스키마 (공유)
+│   └── architecture/            ← 아키텍처 문서
+└── infra/
+    ├── docker-compose.yml       ← 로컬 개발 환경
+    └── modal/                   ← Modal GPU 서빙 설정
+```
+
+### 7.3 기술 스택
+
+**클라이언트**
 
 | 구분 | 선택 | 이유 |
 |------|------|------|
-| 모바일 앱 | React Native (Expo) | iOS/Android 동시 커버, EAS로 빌드/배포 자동화 |
-| 웹 (어드민/랜딩) | Next.js 14+ | 랜딩 페이지 SSR + 어드민 대시보드 |
-| UI 라이브러리 | Tamagui 또는 NativeWind | RN + Web 크로스플랫폼 스타일링 |
+| 모바일 앱 | Flutter | iOS/Android 동시 커버, 네이티브 성능 |
+| 상태 관리 | Riverpod 또는 Bloc | Flutter 생태계 표준 |
 
-### 7.2 백엔드
+**백엔드**
 
 | 구분 | 선택 | 이유 |
 |------|------|------|
 | API 서버 | FastAPI (Python) | ML 파이프라인과 같은 언어, 비동기 지원 |
-| 실시간 채팅 | Supabase Realtime 또는 Socket.IO | 채팅 + Reveal 이벤트 실시간 처리 |
-| 인증 | Supabase Auth 또는 Firebase Auth | 소셜 로그인 + 전화번호 인증 |
+| 실시간 채팅 | Supabase Realtime | 채팅 + Reveal 이벤트 실시간 처리 |
+| 인증 | Supabase Auth | 소셜 로그인 + 전화번호 인증 |
 | 태스크 큐 | Celery + Redis | 이미지 분석, 벡터 생성 등 비동기 작업 |
 
-### 7.3 데이터베이스
+**데이터베이스**
 
 | 구분 | 선택 | 이유 |
 |------|------|------|
 | 메인 DB | Supabase (PostgreSQL) | 유저 프로필, 매칭 이력, 채팅 메타데이터 |
 | 벡터 DB | pgvector (halfvec) | 벡터 유사도 검색, 100만까지 충분 |
-| 이미지 저장소 | Supabase Storage 또는 S3 | 원본/블러 처리된 사진 저장 |
+| 이미지 저장소 | Supabase Storage | 원본/블러 처리된 사진 저장 |
 | 캐시 | Redis | 매칭 큐, 세션, 실시간 데이터 |
 
-### 7.4 AI/ML 파이프라인
+**AI/ML 파이프라인**
 
 | 구분 | 선택 | 이유 |
 |------|------|------|
@@ -203,43 +243,50 @@ pref = normalize(pref)
 | 체형 분석 | MediaPipe Pose | 33개 랜드마크 기반 체형 비율 추출 |
 | 얼굴 감지/블러 | MediaPipe Face Detection | 실시간 얼굴 감지 및 블러 처리 |
 | 컬러 분석 | OpenCV + K-Means | 의류 영역 색상 클러스터링 |
-| ML 서빙 | Modal 또는 Replicate | GPU 추론, 콜드스타트 허용 배치 처리 |
+| ML 서빙 | Modal | GPU 추론, 콜드스타트 허용 배치 처리 |
 
-### 7.5 인프라
+**인프라**
 
 | 구분 | 선택 | 이유 |
 |------|------|------|
 | 호스팅 | Railway 또는 Fly.io | 초기 비용 효율적 |
-| GPU 추론 | Modal 또는 Replicate | CLIP, Pose 모델 서빙 |
-| CI/CD | GitHub Actions | 자동 빌드, 테스트, 배포 |
+| GPU 추론 | Modal | CLIP, Pose 모델 서빙 |
+| CI/CD | GitHub Actions | 경로 기반 트리거로 프론트/백 독립 배포 |
 | 모니터링 | Sentry + Posthog | 에러 트래킹 + 유저 행동 분석 |
 
-### 7.6 아키텍처
+### 7.4 시스템 아키텍처
 
 ```
-┌─────────────┐     ┌─────────────┐
-│  RN App     │     │  Next.js    │
-│  (Expo)     │     │  (Admin)    │
-└──────┬──────┘     └──────┬──────┘
-       │                   │
-       └────────┬──────────┘
-                │ REST / WebSocket
-       ┌────────▼────────┐
-       │   FastAPI        │
-       │   (API Server)   │
-       └──┬─────┬─────┬──┘
-          │     │     │
-    ┌─────▼─┐ ┌▼───┐ ┌▼──────────┐
-    │Supa   │ │Redis│ │Celery     │
-    │base   │ │     │ │Workers    │
-    │(PG +  │ └─────┘ └─────┬─────┘
-    │Vector │               │
-    │+Auth) │        ┌──────▼──────┐
-    └───────┘        │ Modal/      │
-                     │ Replicate   │
-                     │ (GPU ML)    │
-                     └─────────────┘
+┌─────────────┐
+│  Flutter     │
+│  App         │
+└──────┬──────┘
+       │ REST / WebSocket
+       │
+┌──────▼──────┐
+│  FastAPI     │
+│  (API Server)│
+└──┬───┬───┬──┘
+   │   │   │
+┌──▼─┐ │ ┌─▼──────────┐
+│Supa│ │ │Celery       │
+│base│ │ │Workers      │
+│(PG+│ │ └──────┬──────┘
+│Vec │ │        │
+│+Auth│ │ ┌──────▼──────┐
+│+Stg)│ │ │ Modal       │
+└────┘ │ │ (GPU ML)    │
+       │ │ FashionSigLIP│
+ ┌─────▼┐│ SCHP        │
+ │Redis ││ MediaPipe   │
+ └──────┘└─────────────┘
 ```
+
+### 7.5 프론트-백 협업 규칙
+
+- **API 계약**: FastAPI가 자동 생성하는 OpenAPI 스키마(`docs/api-spec/`)를 단일 진실 공급원(SSOT)으로 사용합니다.
+- **독립 배포**: GitHub Actions에서 경로 기반 트리거를 사용하여 `apps/**` 변경은 앱 빌드만, `services/**` 변경은 API 배포만 실행합니다.
+- **로컬 개발**: `docker-compose.yml`로 Supabase + Redis + API 서버를 로컬에서 구동합니다. Flutter 앱은 로컬 API를 바라봅니다.
 
 ---
 
@@ -255,16 +302,16 @@ pref = normalize(pref)
 
 ---
 
-## 9. 타임라인 (원맨팀, AI 기반 개발)
+## 9. 타임라인 (2인팀, AI 기반 개발)
 
-| 기간 | 마일스톤 |
-|------|----------|
-| Week 1~2 | 서비스 기획 확정, DB 스키마, API 설계 |
-| Week 3~4 | 온보딩 플로우 (RN) + 벡터 생성 파이프라인 (FashionSigLIP + Pose) |
-| Week 5~6 | 매칭 알고리즘 + 추천 API |
-| Week 7~8 | 채팅 + Reveal + 프로필 UI |
-| Week 9~10 | 얼굴 블러 파이프라인 + 전체 통합 테스트 |
-| Week 11~12 | 클로즈드 베타 (50~100명) + 피드백 반영 |
+| 기간 | 프론트엔드 (Flutter) | 백엔드 (FastAPI + ML) |
+|------|---------------------|----------------------|
+| Week 1~2 | 와이어프레임, UI 설계 | DB 스키마, API 설계, 모노레포 세팅 |
+| Week 3~4 | 온보딩 플로우 UI | 벡터 생성 파이프라인 (FashionSigLIP + Pose) |
+| Week 5~6 | 프로필 + 추천 리스트 UI | 매칭 알고리즘 + 추천 API |
+| Week 7~8 | 채팅 UI + Reveal 화면 | 채팅 API + Reveal 상태 머신 + 얼굴 블러 |
+| Week 9~10 | 프론트-백 통합 + 버그 수정 | 통합 테스트 + 엣지케이스 처리 |
+| Week 11~12 | 앱스토어 준비 | 클로즈드 베타 (50~100명) + 피드백 반영 |
 
 ---
 
