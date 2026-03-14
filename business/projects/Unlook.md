@@ -6,7 +6,7 @@ status: idea
 domain: AI 데이팅 플랫폼
 ---
 
-# StyleMatch
+# Unlook
 
 > 얼굴이 아닌 스타일과 바이브로 연결되는 새로운 방식의 데이팅 플랫폼입니다.
 
