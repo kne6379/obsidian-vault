@@ -178,8 +178,7 @@ async def __call__(self, scope, receive, send):
 
 ## 관련 문서
 
-- [[멱등성]] - 분산 시스템에서의 안전한 재시도 설계
-- [[디자인 패턴 비교]] - Strategy, Provider 등 미들웨어와 유사한 구조적 패턴
+- [[API Gateway]] - ASGI 애플리케이션과 연동되는 API 진입점
 
 ---
 
