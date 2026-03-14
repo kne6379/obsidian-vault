@@ -1,3 +1,43 @@
+# Multi-Agent Analyze Skill Implementation Plan
+
+> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** 기존 `/analyze` 스킬을 5개 전문가 에이전트 기반 멀티에이전트 분석 시스템으로 교체
+
+**Architecture:** `.claude/commands/analyze.md` 파일 1개를 교체한다. 스킬 파일은 자연어 지시문으로 구성되며, Claude Code가 로드 시 Agent 도구를 호출하여 1단계(구조 분석) → 2단계(4개 전문가 병렬) → 3단계(메인 취합) 파이프라인을 실행한다.
+
+**Tech Stack:** Claude Code 스킬 시스템 (.claude/commands/), Agent 도구, WebSearch 도구
+
+**Spec:** `docs/superpowers/specs/2026-03-14-multi-agent-analyze-design.md`
+
+---
+
+## File Structure
+
+| 파일 | 작업 | 역할 |
+|------|------|------|
+| `.claude/commands/analyze.md` | 교체 | 멀티에이전트 분석 스킬 (전체 파일 교체) |
+
+---
+
+### Task 1: 스킬 파일 작성
+
+**Files:**
+- Modify: `.claude/commands/analyze.md` (전체 교체)
+
+- [ ] **Step 1: 기존 analyze.md 백업 확인**
+
+기존 파일은 git에 있으므로 별도 백업 불필요. 현재 커밋 해시 확인만 한다.
+
+```bash
+git log --oneline -1 -- .claude/commands/analyze.md
+```
+
+- [ ] **Step 2: analyze.md를 새 스킬 파일로 교체**
+
+`.claude/commands/analyze.md`를 아래 내용으로 전체 교체한다:
+
+```markdown
 ---
 description: 볼트 멀티에이전트 분석 (구조 + 커리어 + 사업 + 삶 + 트렌드)
 ---
@@ -268,3 +308,29 @@ status: done
 - 에이전트는 볼트 문서를 읽기만 합니다. 수정하지 않습니다.
 - 유일한 쓰기 작업은 메인 세션의 `_meta/ANALYSIS.md` 저장뿐입니다.
 - life/ 영역 문서는 에이전트가 읽되, 출력에 민감한 내용을 직접 인용하지 않고 요약만 합니다.
+```
+
+- [ ] **Step 3: 수동 테스트**
+
+스킬 파일 교체 후 `/analyze`를 실행하여 다음을 확인한다:
+1. 1단계 구조 분석 에이전트가 정상 디스패치되는가
+2. 2단계 4개 에이전트가 병렬로 디스패치되는가
+3. 각 에이전트가 올바른 영역 문서를 읽는가
+4. 웹 서치 에이전트들이 검색을 수행하는가
+5. 삶의 멘토 에이전트가 웹 서치를 하지 않는가
+6. 메인 세션이 결과를 종합하여 `_meta/ANALYSIS.md`에 저장하는가
+7. 분석 히스토리가 누적되는가
+8. 형 페르소나 조언이 반말로 작성되는가
+
+- [ ] **Step 4: 커밋**
+
+```bash
+git add .claude/commands/analyze.md
+git commit -m "feat: upgrade /analyze to multi-agent analysis system
+
+Replace single-pass vault analysis with 5 expert agents:
+- Vault structure analyst (1st stage, solo)
+- Career/tech expert, Business strategist,
+  Life mentor, Trend analyst (2nd stage, parallel)
+- Main session synthesizes with 형 persona (3rd stage)"
+```
