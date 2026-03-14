@@ -172,39 +172,35 @@ pref = normalize(pref)
 
 | 역할 | 담당 영역 | 작업 경로 |
 |------|-----------|-----------|
-| 프론트엔드 | Flutter 앱 (iOS/Android) | `apps/mobile/` |
-| 백엔드 | FastAPI + ML 파이프라인 | `services/api/` |
+| 프론트엔드 | Flutter 앱 (iOS/Android) | `app/` |
+| 백엔드 | FastAPI + ML 파이프라인 | `api/` |
 
 ### 7.2 모노레포 구조
 
 ```
 unlook/
-├── CLAUDE.md                    ← AI 작업 지침
+├── CLAUDE.md                ← AI 작업 지침
 ├── .github/
 │   └── workflows/
-│       ├── api.yml              ← services/** 변경 시 트리거
-│       └── mobile.yml           ← apps/** 변경 시 트리거
-├── apps/
-│   └── mobile/                  ← Flutter (Dart)
-│       ├── lib/
-│       ├── pubspec.yaml
-│       └── ...
-├── services/
-│   └── api/                     ← FastAPI (Python)
-│       ├── app/
-│       │   ├── main.py
-│       │   ├── routers/
-│       │   ├── models/
-│       │   ├── services/
-│       │   └── ml/              ← ML 파이프라인
-│       ├── requirements.txt
-│       └── Dockerfile
-├── docs/
-│   ├── api-spec/                ← OpenAPI 스키마 (공유)
-│   └── architecture/            ← 아키텍처 문서
+│       ├── api.yml          ← api/** 변경 시 트리거
+│       └── app.yml          ← app/** 변경 시 트리거
+├── app/                     ← Flutter (Dart)
+│   ├── lib/
+│   ├── pubspec.yaml
+│   └── ...
+├── api/                     ← FastAPI (Python)
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── routers/
+│   │   ├── models/
+│   │   ├── services/
+│   │   └── ml/              ← ML 파이프라인
+│   ├── requirements.txt
+│   └── Dockerfile
+├── docs/                    ← OpenAPI 스키마, 아키텍처 문서
 └── infra/
-    ├── docker-compose.yml       ← 로컬 개발 환경
-    └── modal/                   ← Modal GPU 서빙 설정
+    ├── docker-compose.yml   ← 로컬 개발 환경
+    └── modal/               ← Modal GPU 서빙 설정
 ```
 
 ### 7.3 기술 스택
@@ -285,7 +281,7 @@ unlook/
 ### 7.5 프론트-백 협업 규칙
 
 - **API 계약**: FastAPI가 자동 생성하는 OpenAPI 스키마(`docs/api-spec/`)를 단일 진실 공급원(SSOT)으로 사용합니다.
-- **독립 배포**: GitHub Actions에서 경로 기반 트리거를 사용하여 `apps/**` 변경은 앱 빌드만, `services/**` 변경은 API 배포만 실행합니다.
+- **독립 배포**: GitHub Actions에서 경로 기반 트리거를 사용하여 `app/**` 변경은 앱 빌드만, `api/**` 변경은 API 배포만 실행합니다.
 - **로컬 개발**: `docker-compose.yml`로 Supabase + Redis + API 서버를 로컬에서 구동합니다. Flutter 앱은 로컬 API를 바라봅니다.
 
 ---
