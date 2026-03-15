@@ -38,7 +38,7 @@ status: done
 
 | 날짜 | 문서 | 영역 |
 |------|------|------|
-| 2026-03-14 | [[knowledge/_meta/INDEX]] | knowledge |
+| 2026-03-14 | [[INDEX]] | knowledge |
 | 2026-03-13 | [[Ghostty 단축키]] | knowledge |
 | 2026-03-13 | [[ngrok]] | knowledge |
 | 2026-03-13 | [[CLAUDE.md 설계 원칙]] | knowledge |
@@ -75,13 +75,7 @@ status: done
 
 ### 미등록 문서
 
-| 문서 | 영역 |
-|------|------|
-| [[Docker]] | knowledge |
-| [[ECS]] | knowledge |
-| [[김노을_이력서_백엔드AI_v2]] | projects |
-| [[김노을_이력서_백엔드AI_v3]] | projects |
-| [[김노을 이력서 피드백]] | projects |
+없음 (2026-03-13 기준 모두 등록 완료)
 
 ### 태그 분포 (상위 10개)
 
