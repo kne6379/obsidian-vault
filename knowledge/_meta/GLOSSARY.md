@@ -140,6 +140,8 @@ status: done
 
 **Factory Pattern** - 객체 생성 로직을 캡슐화하여 클라이언트가 구체 클래스를 알 필요 없이 적절한 객체를 얻게 하는 패턴
 
+**퓨샷** (Few-shot) - 모델에게 소수의 예시를 프롬프트로 제공하여 태스크 수행 방법을 안내하는 기법. 예시가 없으면 제로샷(Zero-shot)
+
 **파인튜닝** (Fine-tuning) - 사전 학습된 모델을 특정 도메인이나 작업에 맞게 추가 학습시키는 방법
 
 **프로세스** (Process) - 운영체제로부터 자원을 할당받는 작업의 단위. 독립적인 메모리 공간을 가짐
@@ -155,6 +157,8 @@ status: done
 ---
 
 ## ㅎ~
+
+**Harness** (Evaluation Harness) - 언어 모델의 성능을 다양한 벤치마크에 대해 표준화된 조건으로 평가하는 프레임워크. EleutherAI의 lm-eval이 업계 사실상 표준
 
 **HCL** (HashiCorp Configuration Language) - HashiCorp이 개발한 Terraform 전용 설정 언어. JSON보다 읽기 쉬운 선언형 문법을 제공
 
