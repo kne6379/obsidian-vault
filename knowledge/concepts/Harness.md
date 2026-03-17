@@ -1,128 +1,171 @@
 ---
 created: 2026-03-17
 updated: 2026-03-17
-tags: [concept, devops, cicd, cloud]
+tags: [concept, ai, llm, tools]
 status: done
 ---
 
-# Harness
+# 평가 하네스
 
-> AI 기반 소프트웨어 딜리버리 플랫폼으로, CI/CD, 보안, 인프라 관리, 비용 최적화를 통합 제공하는 엔터프라이즈급 DevOps 솔루션입니다.
+> 언어 모델의 성능을 다양한 벤치마크에 대해 표준화된 방식으로 측정하는 프레임워크입니다. 대표적으로 EleutherAI의 LM Evaluation Harness(lm-eval)가 업계 사실상 표준으로 사용됩니다.
 
 ---
 
 ## 1. 정의
 
-Harness는 소프트웨어 딜리버리 라이프사이클 전반을 자동화하는 AI 기반 DevOps 플랫폼입니다. 단순한 CI/CD 도구를 넘어, 보안 테스트 오케스트레이션, 인프라 코드 관리, 내부 개발자 포털, 카오스 엔지니어링까지 포괄하는 통합 플랫폼으로 발전했습니다.
+평가 하네스(Evaluation Harness)는 언어 모델을 여러 벤치마크에 대해 일관된 조건으로 평가하는 소프트웨어 프레임워크입니다. 개별 벤치마크가 "시험 문제"라면, 하네스는 그 시험을 운영하는 "시험 감독관"에 해당합니다.
 
-SaaS와 온프레미스 배포를 모두 지원하며, AI를 활용한 테스트 인텔리전스, 배포 검증, 자동 롤백 등이 핵심 차별점입니다.
+EleutherAI가 개발한 **LM Evaluation Harness**(이하 lm-eval)는 이 분야의 사실상 표준입니다. Hugging Face의 Open LLM Leaderboard 백엔드로 사용되며, NVIDIA, Cohere, BigScience, Mosaic ML 등 수십 개 조직이 내부적으로 활용합니다. 수백 편의 논문에서 인용되었습니다.
 
 ---
 
 ## 2. 등장 배경 및 필요성
 
-기존 CI/CD 도구들이 가진 한계를 해결하기 위해 등장했습니다.
+LLM 평가에는 세 가지 핵심 문제가 있었습니다.
 
-- **Jenkins 유지보수 부담**: Jenkins는 유연하지만 플러그인 관리, 스케일링, 보안 설정에 2~5명의 전담 엔지니어가 필요한 경우가 많습니다. 도구 자체를 유지하는 데 지나치게 많은 리소스가 소모됩니다.
-- **파편화된 DevOps 도구 체인**: CI, CD, 보안 스캐닝, 인프라 관리, 비용 관리가 각각 다른 도구로 운영되면서 통합과 일관성 확보가 어렵습니다.
-- **수동 배포 검증의 한계**: 배포 후 이상 징후를 사람이 모니터링하고 판단하는 방식은 속도와 정확도에 한계가 있습니다. 특히 마이크로서비스 환경에서는 서비스 간 영향도 파악이 어렵습니다.
+- **재현성 부재**: 각 연구팀이 벤치마크를 자체 구현하면서 동일한 벤치마크라도 구현 차이로 점수가 달라지는 문제가 발생했습니다.
+- **투명성 부족**: 평가 코드가 공개되지 않거나, 프롬프트 형식·퓨샷 구성 등 세부 설정이 논문에 명시되지 않는 경우가 많았습니다.
+- **비교 불가능성**: 모델마다 다른 코드, 다른 설정으로 평가하면 공정한 비교가 불가능합니다.
+
+lm-eval은 이 세 문제를 해결하기 위해, 모든 모델이 "동일한 입력과 동일한 코드베이스"에서 평가되는 통합 프레임워크로 설계되었습니다.
 
 ---
 
 ## 3. 작동 원리 / 핵심 개념
 
-### 3.1 플랫폼 아키텍처
+### 3.1 아키텍처
 
-Harness는 세 가지 핵심 컴포넌트로 구성됩니다.
+lm-eval은 평가 로직과 모델 구현을 분리하는 구조입니다.
 
-- **Harness Manager(컨트롤 플레인)**: 파이프라인 설정, 오케스트레이션, 정책 관리를 담당합니다. SaaS 또는 자체 호스팅으로 운영 가능합니다.
-- **Harness Delegate**: 대상 환경(쿠버네티스 클러스터, 클라우드 계정 등)에 설치되는 경량 에이전트입니다. 실제 배포, 빌드, 검증 작업을 수행합니다.
-- **파이프라인 계층 구조**: Pipeline → Stage → Step의 3단 구조로 워크플로우를 구성합니다. 순차 및 병렬 실행을 모두 지원합니다.
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  모델 백엔드  │ ──▶ │  평가 엔진     │ ◀── │  태스크 정의  │
+│ (HF, vLLM,  │     │ (프롬프트 구성, │     │ (YAML 설정)  │
+│  OpenAI 등)  │     │  점수 계산)    │     │              │
+└─────────────┘     └──────────────┘     └─────────────┘
+                           │
+                    ┌──────▼──────┐
+                    │  결과 출력    │
+                    │ (acc, F1 등) │
+                    └─────────────┘
+```
 
-### 3.2 핵심 모듈
+- **모델 백엔드**: HuggingFace Transformers, vLLM, GGUF(llama.cpp), OpenAI API, Anthropic API 등 다양한 백엔드를 지원합니다.
+- **태스크 정의**: YAML 파일로 선언적으로 정의합니다. 프롬프트 형식, 퓨샷 수, 평가 지표 등을 설정합니다.
+- **평가 엔진**: 프롬프트를 구성하고, 모델 출력의 로그 확률을 계산하여 점수를 산출합니다.
 
-| 모듈 | 설명 |
-|------|------|
-| CI (Continuous Integration) | 컨테이너 기반 빌드, Test Intelligence로 테스트 주기 80% 단축 |
-| CD (Continuous Delivery) | 카나리, 블루/그린, 롤링 배포 전략 기본 제공 |
-| STO (Security Testing Orchestration) | SAST, SCA, DAST, 컨테이너 스캔 통합 오케스트레이션 |
-| IaCM (Infrastructure as Code Management) | [[Terraform]], Terragrunt, AWS CDK 기반 인프라 자동화 |
-| IDP (Internal Developer Portal) | Backstage 기반 내부 개발자 포털 |
-| Database DevOps | 데이터베이스 스키마 변경 관리 및 환경 간 일관성 보장 |
-| Artifact Registry | 아티팩트 관리, 스캐닝, 거버넌스 통합 |
-| Supply Chain Security | 소프트웨어 공급망 보안 및 컴플라이언스 |
+### 3.2 지원 벤치마크
 
-### 3.3 AI 기반 기능
+400개 이상의 태스크를 지원하며, 주요 벤치마크는 다음과 같습니다.
 
-- **Test Intelligence**: AI가 코드 변경 영향 범위를 분석하여 필요한 테스트만 선별 실행합니다. 테스트 시간을 최대 80% 단축합니다.
-- **AI 배포 검증**: 로그와 APM 텔레메트리를 AI로 분석하여 배포 건강 상태를 자동 판별합니다. 이상 징후 감지 시 자동 롤백을 수행합니다.
-- **AI DevOps Agent**: 자연어로 파이프라인을 생성하고 관리할 수 있는 AI 에이전트입니다. 모든 Harness 모듈에 걸쳐 파이프라인과 스테이지를 생성합니다.
+| 벤치마크 | 측정 역량 | 평가 방식 |
+|----------|-----------|-----------|
+| MMLU | 57개 과목의 지식 이해도 | 4지선다, 로그 확률 기반 선택 |
+| HellaSwag | 상식 추론 (문장 완성) | 문맥 이후 가장 적절한 후속 문장 선택 |
+| ARC | 과학적 추론 | 객관식 |
+| TruthfulQA | 진실성 (환각 저항) | 생성 및 객관식 |
+| GSM8K | 수학 추론 | 단계별 풀이 정확도 |
+| Winogrande | 대명사 해소(상식) | 이진 선택 |
+| HumanEval | 코드 생성 | 함수 생성 후 테스트 통과율 |
 
-### 3.4 거버넌스
+### 3.3 평가 메커니즘
 
-- Open Policy Agent(OPA) 통합으로 유연한 정책 적용이 가능합니다.
-- 엔터프라이즈급 RBAC, 배포 동결(Deployment Freeze), 감사 추적을 기본 제공합니다.
+대부분의 벤치마크는 **로그 확률 기반 평가**를 사용합니다.
+
+1. 프롬프트(문맥 + 퓨샷 예시)를 모델에 입력합니다.
+2. 각 선택지를 이어붙인 후, 모델이 해당 선택지에 부여하는 로그 확률을 계산합니다.
+3. 로그 확률 합이 가장 높은 선택지를 모델의 답으로 판정합니다.
+4. 정답과 비교하여 정확도를 산출합니다.
+
+이 방식은 모델이 실제로 텍스트를 생성하지 않아도 되므로 평가 속도가 빠르고, 결과가 결정적(deterministic)입니다.
+
+### 3.4 사용 방법
+
+CLI로 실행합니다.
+
+```bash
+lm_eval --model hf \
+  --model_args pretrained=mistralai/Mistral-7B-v0.3 \
+  --tasks mmlu,hellaswag \
+  --num_fewshot 5 \
+  --batch_size auto \
+  --output_path results/
+```
+
+파이썬 API로도 사용 가능합니다.
+
+```python
+import lm_eval
+
+results = lm_eval.simple_evaluate(
+    model="hf",
+    model_args="pretrained=mistralai/Mistral-7B-v0.3",
+    tasks=["hellaswag", "mmlu"],
+    num_fewshot=5,
+)
+```
+
+주요 파라미터는 다음과 같습니다.
+
+- `--model`: 모델 백엔드 (hf, vllm, openai 등)
+- `--tasks`: 평가할 벤치마크 목록
+- `--num_fewshot`: 퓨샷 예시 수 (0이면 제로샷)
+- `--batch_size`: 배치 크기 (auto 권장)
 
 ---
 
 ## 4. 장점 및 이점
 
-- **낮은 유지보수 비용**: SaaS 모델에서는 인프라 관리가 불필요합니다. Jenkins 대비 운영 인력을 대폭 절감할 수 있습니다.
-- **빌드 속도 향상**: 스마트 캐싱(Gradle, Bazel, Maven, Docker 레이어)과 Test Intelligence로 빌드 시간을 크게 단축합니다. 실제 사례로 Kajabi는 p90 빌드 타임을 50% 줄이면서 비용도 50% 절감했습니다.
-- **내장 보안**: 시크릿 관리, 감사 추적, 정책 엔진이 기본 탑재되어 별도 플러그인 없이 보안 거버넌스를 확보할 수 있습니다.
-- **멀티클라우드 지원**: AWS, GCP, Azure 등 주요 클라우드 프로바이더와 네이티브 통합됩니다.
-- **시각적 파이프라인 편집기**: YAML 외에 비주얼 에디터를 제공하여 복잡한 워크플로우를 직관적으로 구성할 수 있습니다.
+- **재현성 보장**: 동일한 코드베이스로 평가하므로 구현 차이에 의한 점수 변동이 없습니다.
+- **공정한 비교**: 모든 모델이 동일한 입력, 동일한 조건에서 평가됩니다.
+- **광범위한 호환성**: HuggingFace, vLLM, OpenAI API 등 주요 모델 인터페이스를 모두 지원합니다.
+- **확장 용이**: YAML 기반 선언적 태스크 정의로 새로운 벤치마크를 쉽게 추가할 수 있습니다.
+- **업계 표준**: Open LLM Leaderboard의 백엔드로 사용되어 결과의 신뢰도가 높습니다.
 
 ---
 
 ## 5. 한계점 및 고려사항
 
-- **비용**: 엔터프라이즈 기능은 유료이며, 소규모 팀에게는 과도한 비용이 될 수 있습니다. GitHub Actions나 Jenkins 대비 진입 비용이 높습니다.
-- **학습 곡선**: 모듈이 많고 개념이 풍부하여 초기 학습에 시간이 필요합니다. Jenkins의 Groovy나 GitHub Actions의 YAML보다 플랫폼 자체에 대한 이해가 더 요구됩니다.
-- **쿠버네티스 네이티브 워크플로우 제한**: 일부 팀은 쿠버네티스 환경에서 ArgoCD나 Flux 같은 GitOps 네이티브 도구가 더 적합하다고 느낄 수 있습니다.
-- **벤더 종속성**: 통합 플랫폼의 특성상 Harness 생태계에 대한 의존도가 높아질 수 있습니다.
+- **벤치마크 오염(Contamination)**: 학습 데이터에 벤치마크 문제가 포함될 경우 점수가 부풀려집니다. 하네스 자체는 이 문제를 해결하지 못합니다.
+- **실제 활용 능력과의 괴리**: 벤치마크 점수가 높다고 해서 실제 사용자 경험이 좋다는 보장은 없습니다. 대화 능력, 지시 따르기 등은 별도 평가가 필요합니다.
+- **로그 확률 방식의 한계**: 객관식 평가는 모델의 생성 능력을 직접 측정하지 못합니다. 실제 텍스트 생성 품질과 다를 수 있습니다.
+- **리소스 요구량**: 400개 이상의 전체 태스크를 실행하면 상당한 GPU 시간이 필요합니다.
 
 ---
 
 ## 6. 실무 적용 가이드
 
-### 6.1 경쟁 도구 비교
+### 6.1 주요 활용 사례
 
-| 기준 | Harness | Jenkins | GitHub Actions |
-|------|---------|---------|----------------|
-| 유형 | 상용 플랫폼 | 오픈소스 | 프리미엄(GitHub) |
-| 호스팅 | SaaS + 온프레미스 | 자체 호스팅 전용 | SaaS + 셀프호스티드 러너 |
-| 파이프라인 설정 | 비주얼 에디터 + YAML | Groovy(Jenkinsfile) | YAML |
-| 유지보수 | 낮음(매니지드) | 높음 | 낮음 |
-| 확장성 | 내장 오토스케일링 | 수동 구성 | 클라우드 호스티드 러너 |
-| 보안 | 네이티브 시크릿, RBAC, 감사 | 플러그인 의존 | 내장 시크릿, OIDC |
-| 적합 대상 | 엔터프라이즈 규모 CD | 복잡한 커스텀 워크플로우 | GitHub 중심 팀 |
+| 활용 사례 | 설명 |
+|-----------|------|
+| 모델 선택 | 후보 모델의 성능을 동일 조건에서 비교하여 최적 모델 선정 |
+| 파인튜닝 검증 | 파인튜닝 전후 벤치마크 점수 변화로 학습 효과 측정 |
+| 양자화 영향 분석 | FP16 → INT4 양자화 시 성능 하락 정도를 정량적으로 측정 |
+| 릴리스 검증 | 모델 배포 전 성능이 기준선 이상인지 CI 파이프라인에서 자동 확인 |
+| 리더보드 구축 | 조직 내부 모델 리더보드 운영 |
 
-### 6.2 도입 판단 기준
+### 6.2 유사 도구 비교
 
-다음 조건에 해당하면 Harness 도입을 검토할 만합니다.
-
-- 멀티클라우드 또는 멀티서비스 배포를 운영하는 경우
-- Jenkins 유지보수에 과도한 리소스가 투입되는 경우
-- 배포 검증과 롤백을 자동화하고 싶은 경우
-- CI/CD, 보안, 인프라 관리를 단일 플랫폼으로 통합하고 싶은 경우
-
-반면, GitHub 중심의 소규모 팀이라면 GitHub Actions가, 극도의 커스터마이징이 필요하거나 에어갭 환경이라면 Jenkins가 더 적합할 수 있습니다.
+| 도구 | 특징 | 적합 대상 |
+|------|------|-----------|
+| lm-eval (EleutherAI) | 400+ 벤치마크, 업계 표준, 로그 확률 기반 | 범용 LLM 벤치마킹 |
+| HELM (Stanford) | 표준화된 시나리오, 다양한 지표(공정성, 독성 등) | 다면 평가가 필요한 연구 |
+| OpenCompass | 대규모 벤치마크 스위트, 중국어 벤치마크 강점 | 다국어 모델 평가 |
+| Chatbot Arena (LMSYS) | 사용자 투표 기반 ELO 평가 | 대화 품질 평가 |
 
 ---
 
 ## 관련 문서
 
-- [[Docker]] - Harness CI의 컨테이너 기반 빌드 환경
-- [[쿠버네티스]] - Harness CD의 주요 배포 대상 오케스트레이션 플랫폼
-- [[ECS]] - AWS 환경에서의 Harness CD 배포 대상
+- [[LLM]] - 평가 대상이 되는 대규모 언어 모델
+- [[RAG]] - 검색 증강 생성 파이프라인의 성능 평가에도 하네스 활용 가능
 
 ---
 
 ## 참고 자료
 
-- [Harness 공식 사이트](https://www.harness.io/) - 플랫폼 개요 및 모듈 소개
-- [Harness Developer Hub](https://developer.harness.io/) - 공식 문서 및 튜토리얼
-- [Harness CI vs Jenkins](https://www.harness.io/comparison-guide/harness-ci-vs-jenkins) - 공식 비교 가이드
-- [Harness CI vs GitHub Actions](https://www.harness.io/comparison-guide/harness-ci-vs-github-actions) - 공식 비교 가이드
-- [Harness GitHub Repository](https://github.com/harness/harness) - 오픈소스 버전
+- [EleutherAI LM Evaluation Harness GitHub](https://github.com/EleutherAI/lm-evaluation-harness) - 공식 저장소
+- [EleutherAI 프로젝트 페이지](https://www.eleuther.ai/projects/large-language-model-evaluation) - 프로젝트 개요
+- [Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) - lm-eval 기반 리더보드
+- [New Task Guide](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/new_task_guide.md) - 커스텀 벤치마크 추가 가이드

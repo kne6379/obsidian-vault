@@ -38,7 +38,7 @@ status: done
 | [[CLAUDE.md 설계 원칙]] | CLAUDE.md 로딩 메커니즘, 안티패턴, 실무 설계 가이드 | ai, devops | done |
 | [[Docker]] | 컨테이너 기반 애플리케이션 패키징 및 배포 플랫폼 | devops, docker, container | done |
 | [[ECS]] | AWS 완전 관리형 컨테이너 오케스트레이션 서비스 | devops, cloud, container | done |
-| [[Harness]] | AI 기반 통합 DevOps 플랫폼 (CI/CD, 보안, 인프라 관리) | devops, cicd, cloud | done |
+| [[Harness]] | LLM 평가 하네스 — 표준화된 벤치마크 프레임워크 (lm-eval) | ai, llm, tools | done |
 | [[GitHub 기술 인사이트 탐색법]] | GitHub로 기술 동향 파악 및 레포지토리 건강도 평가 | reference, career | done |
 | [[GraphRAG]] | 지식 그래프 기반 검색 증강 생성 | ai, llm, rag | done |
 | [[ngrok]] | 로컬 서버를 인터넷에 노출하는 보안 터널링 도구 | devops, backend, networking | done |

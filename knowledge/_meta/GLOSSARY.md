@@ -82,8 +82,6 @@ status: done
 
 **싱글톤** (Singleton) - 클래스의 인스턴스가 하나만 생성되도록 보장하는 패턴. 리소스 재사용이 필요할 때 사용
 
-**STO** (Security Testing Orchestration) - 보안 테스트를 파이프라인에 통합하여 SAST, SCA, DAST 스캔을 오케스트레이션하고 결과를 지능적으로 중복 제거하는 기법
-
 **SOLID** - 객체지향 설계의 5가지 원칙(SRP, OCP, LSP, ISP, DIP)의 앞글자를 딴 약어
 
 ---
@@ -142,6 +140,8 @@ status: done
 
 **Factory Pattern** - 객체 생성 로직을 캡슐화하여 클라이언트가 구체 클래스를 알 필요 없이 적절한 객체를 얻게 하는 패턴
 
+**퓨샷** (Few-shot) - 모델에게 소수의 예시를 프롬프트로 제공하여 태스크 수행 방법을 안내하는 기법. 예시가 없으면 제로샷(Zero-shot)
+
 **파인튜닝** (Fine-tuning) - 사전 학습된 모델을 특정 도메인이나 작업에 맞게 추가 학습시키는 방법
 
 **프로세스** (Process) - 운영체제로부터 자원을 할당받는 작업의 단위. 독립적인 메모리 공간을 가짐
@@ -158,7 +158,7 @@ status: done
 
 ## ㅎ~
 
-**Harness** - AI 기반 소프트웨어 딜리버리 플랫폼. CI/CD, 보안 테스트, 인프라 코드 관리, 개발자 포털 등을 통합 제공하는 엔터프라이즈급 DevOps 솔루션
+**Harness** (Evaluation Harness) - 언어 모델의 성능을 다양한 벤치마크에 대해 표준화된 조건으로 평가하는 프레임워크. EleutherAI의 lm-eval이 업계 사실상 표준
 
 **HCL** (HashiCorp Configuration Language) - HashiCorp이 개발한 Terraform 전용 설정 언어. JSON보다 읽기 쉬운 선언형 문법을 제공
 
@@ -193,8 +193,6 @@ status: done
 **EKS** (Elastic Kubernetes Service) - AWS의 관리형 Kubernetes 서비스. 쿠버네티스 컨트롤 플레인을 AWS가 관리
 
 **Fargate** - AWS의 서버리스 컨테이너 컴퓨팅 엔진. ECS/EKS와 함께 사용하여 인프라 관리 없이 컨테이너 실행
-
-**Delegate** - Harness 플랫폼에서 대상 환경에 설치되는 경량 에이전트. 실제 빌드, 배포, 검증 작업을 수행하며 Harness Manager와 통신
 
 **Ghostty** - Mitchell Hashimoto(HashiCorp 창업자)가 개발한 GPU 가속 터미널 에뮬레이터. 네이티브 UI와 높은 성능을 동시에 제공
 
