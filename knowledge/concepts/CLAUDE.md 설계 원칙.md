@@ -1,6 +1,6 @@
 ---
 created: 2026-03-13
-updated: 2026-03-13
+updated: 2026-03-22
 tags: [concept, ai, devops]
 status: done
 ---
@@ -218,6 +218,117 @@ NEVER: Service 레이어에서 직접 HTTP 예외를 throw하지 않는다.
 | L5 | 지속적 유지보수, 정기 리뷰 |
 
 L4 이상이 되어야 대규모 프로젝트에서 안정적으로 동작합니다.
+
+### 6.6 실전 사례: Unlook 프로젝트
+
+Unlook은 FastAPI + Flutter 기반 데이팅 플랫폼으로, Hexagonal Architecture + Tactical DDD를 채택한 프로젝트입니다. 이 프로젝트의 `.claude/` 구성은 본 문서에서 다룬 원칙들이 실무에서 어떻게 적용되는지 보여주는 사례입니다.
+
+#### 전체 파일 구조
+
+```
+CLAUDE.md                          ← 루트: 스택, 구조, 커밋 컨벤션
+api/CLAUDE.md                      ← 백엔드: 아키텍처, 의존성 방향, 핵심 패턴, 네이밍
+.claude/
+├── rules/backend/
+│   ├── architecture.md            ← 계층 구조, DI, 에러 처리
+│   ├── domain.md                  ← 순수 비즈니스 로직 규칙
+│   ├── application.md             ← Use Case, Facade, Compensation
+│   ├── infrastructure.md          ← Repository, Adapter, ORM
+│   ├── presentation.md            ← Router, 예외 핸들러
+│   ├── testing.md                 ← TDD, 4단계 테스트, Mock 전략
+│   └── ml-pipeline.md             ← GPU 추론, 벡터 처리
+├── skills/
+│   ├── architecture/SKILL.md      ← 아키텍처 가이드 자동 적용
+│   ├── test-conventions/SKILL.md  ← TDD 워크플로우 자동 적용
+│   ├── review/SKILL.md            ← Gemini+Claude 2단 코드 리뷰
+│   ├── test/SKILL.md              ← 테스트 실행 + 분석 오케스트레이터
+│   ├── domain-docs/SKILL.md       ← 도메인 문서 동기화
+│   ├── commit/SKILL.md            ← 커밋 메시지 생성
+│   ├── pr/SKILL.md                ← PR 생성
+│   ├── issue/SKILL.md             ← 이슈 생성
+│   └── document/SKILL.md          ← 코드 문서화
+└── agents/
+    ├── api-reviewer.md            ← 백엔드 코드 리뷰 전문 에이전트
+    ├── app-reviewer.md            ← 프론트엔드 코드 리뷰 전문 에이전트
+    ├── api-test-runner.md         ← 백엔드 테스트 실행 전문 에이전트
+    ├── app-test-runner.md         ← 프론트엔드 테스트 실행 전문 에이전트
+    └── security-auditor.md        ← 보안 감사 전문 에이전트
+```
+
+#### CLAUDE.md 2단계 구조: 루트와 하위 디렉토리
+
+루트 `CLAUDE.md`는 프로젝트 전체에 적용되는 최소한의 정보만 담습니다. 기술 스택, 디렉토리 구조(`app/`, `api/`, `docs/`, `infra/`), 커밋 메시지 컨벤션, API 계약의 SSOT가 OpenAPI 스키마라는 점 등입니다. 약 40줄로, 어떤 세션에서든 항상 로드되면서도 컨텍스트를 과도하게 소비하지 않습니다.
+
+`api/CLAUDE.md`는 백엔드 작업 시에만 온디맨드로 로드됩니다. 여기에는 아키텍처(Hexagonal + DDD), 의존성 방향, 핵심 패턴(Router → Facade → Use Case), 도메인 목록, 네이밍 규칙, 테스트 명령어 등 백엔드 개발에 필수적인 지시가 포함됩니다. 상세 설계 문서는 `@docs/backend-architecture.md`로 `@import`하여 Compaction을 생존시킵니다.
+
+이 분리의 핵심은 **프론트엔드 작업 시 백엔드 규칙이 컨텍스트를 점유하지 않는 것**입니다. Flutter 코드를 수정할 때 Hexagonal Architecture 규칙이 로드되면 토큰만 낭비됩니다.
+
+#### `.claude/rules/`: 계층별 조건부 규칙
+
+rules 파일은 모두 `paths` 프론트매터를 가지고 있어, 해당 경로의 파일을 작업할 때만 로드됩니다.
+
+| 파일 | paths | 역할 |
+|------|-------|------|
+| architecture.md | `api/**/*.py` | 의존성 방향, DI, 에러 처리 패턴 |
+| domain.md | `api/src/domain/**` | import 제한(순수 Python만), Aggregate 규칙 |
+| application.md | `api/src/application/**` | Use Case/Facade 1파일=1동작, Compensation |
+| infrastructure.md | `api/src/infrastructure/**` | Repository/Adapter 네이밍, 폴더 구조 |
+| presentation.md | `api/src/presentation/**` | Router → Facade만 호출, 예외 핸들러 |
+| testing.md | `api/tests/**` | TDD, 4단계 테스트, Mock/Fake 전략, Contract Test |
+| ml-pipeline.md | `api/src/infrastructure/gpu/**` | Modal 위임, 벡터 차원, dtype 규칙 |
+
+이 설계에서 중요한 점은 **계층 경계 위반을 방지하는 규칙이 해당 계층 작업 시 자동으로 주입된다는 것**입니다. `domain/` 파일을 수정하면 "NEVER: FastAPI, SQLAlchemy를 import하지 않습니다"라는 규칙이 자동 로드됩니다. 에이전트가 스스로 규칙을 찾아 읽을 필요가 없습니다.
+
+`architecture.md`만 `api/**/*.py` 전체를 대상으로 하는데, 이는 의존성 방향과 Router → Facade → Use Case 패턴이 어떤 계층을 작업하든 인지해야 하는 규칙이기 때문입니다.
+
+#### `.claude/skills/`: 워크플로우 자동화
+
+스킬은 특정 작업 흐름을 정의합니다. rules가 "무엇을 지켜야 하는가"라면, skills는 "어떤 순서로 수행하는가"입니다.
+
+**글로브 기반 자동 적용 스킬**
+
+일부 스킬은 `globs` 프론트매터를 가져, 매칭되는 파일 작업 시 자동으로 적용됩니다.
+
+- `architecture`: `api/**/*` 경로에서 아키텍처 가이드를 자동 적용합니다
+- `test-conventions`: 테스트 파일(`test_*`, `*_test.py`, `*_test.dart`) 작업 시 TDD 워크플로우(스펙 → 테스트 도출 → 레벨별 사이클)를 주입합니다
+- `domain-docs`: `api/**/*`, `app/**/*` 작업 시 관련 도메인 문서 동기화를 안내합니다
+
+**명시적 호출 스킬**
+
+나머지 스킬은 사용자가 `/commit`, `/review 29`, `/test api` 등으로 직접 호출합니다. `review` 스킬은 Gemini가 먼저 리뷰를 남기고, Claude가 각 코멘트에 동의/반박 답글을 다는 2단 워크플로우를 정의합니다. `test` 스킬은 변경 영역을 감지하여 적절한 서브에이전트(api-test-runner 또는 app-test-runner)를 호출하는 오케스트레이터 역할을 합니다.
+
+#### `.claude/agents/`: 전문 서브에이전트
+
+에이전트는 특정 전문 영역에 대한 독립적인 페르소나입니다. 스킬이나 메인 에이전트가 필요에 따라 호출합니다.
+
+| 에이전트 | 역할 | 격리 방식 |
+|----------|------|-----------|
+| api-reviewer | FastAPI 시니어 리뷰어. 계층 위반, Python 품질, DB/ML 패턴 검사 | worktree |
+| app-reviewer | Flutter 시니어 리뷰어. 위젯 설계, 상태 관리, API 연동 검사 | worktree |
+| api-test-runner | pytest QA 엔지니어. 레벨별 테스트 실행 및 분석 | 기본 |
+| app-test-runner | Flutter test QA 엔지니어. 위젯/유닛 테스트 실행 및 분석 | 기본 |
+| security-auditor | 보안 감사. OWASP Top 10 + 프로젝트 특화 검사 | worktree |
+
+리뷰 에이전트들은 `isolation: worktree`로 설정되어, 메인 작업 디렉토리를 오염시키지 않고 독립된 워크트리에서 코드를 분석합니다. 테스트 러너는 실제 테스트를 실행해야 하므로 기본 환경에서 동작합니다.
+
+각 에이전트는 해당 전문 분야의 체크리스트와 출력 형식을 내장하고 있어, 호출 시 별도의 지시 없이도 일관된 품질의 리뷰/분석 결과를 생산합니다.
+
+#### Compaction 생존 전략의 적용
+
+이 구조에서 Compaction 관점의 설계는 다음과 같습니다.
+
+| 구성 요소 | Compaction 생존 | 이유 |
+|-----------|----------------|------|
+| 루트 CLAUDE.md | 생존 | 디스크에서 재주입 |
+| api/CLAUDE.md | 비생존 (온디맨드) | 하위 디렉토리 파일을 읽을 때만 로드 |
+| `@docs/backend-architecture.md` | 생존 | api/CLAUDE.md의 `@import`로 확장 |
+| `.claude/rules/backend/*.md` | 조건부 생존 | `paths` 매칭 파일 작업 시 재주입 |
+| `.claude/skills/*.md` | 해당 없음 | 워크플로우 호출 시에만 사용 |
+| `.claude/agents/*.md` | 해당 없음 | 서브에이전트 생성 시 컨텍스트로 주입 |
+
+핵심 아키텍처 규칙(의존성 방향, 에러 처리 패턴)은 `api/CLAUDE.md` 인라인 + `@import` + `rules/`의 3중 경로로 보장됩니다. 긴 작업 중 Compaction이 발생해도, 해당 계층의 파일을 다시 건드리는 순간 rules가 재로드되어 규칙이 복원됩니다.
+
+반면, 커밋 메시지 생성이나 PR 생성 같은 워크플로우는 Compaction 생존이 불필요합니다. 이들은 작업 완료 후 1회성으로 호출하므로, 해당 시점에 스킬 파일이 로드되면 충분합니다.
 
 ---
 

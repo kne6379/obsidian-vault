@@ -1,6 +1,6 @@
 ---
 created: 2026-02-01
-updated: 2026-03-13
+updated: 2026-03-22
 tags: [meta, glossary]
 status: done
 ---
@@ -21,6 +21,8 @@ status: done
 ---
 
 ## ㄱ
+
+**계약 테스트** (Contract Test) - 하나의 추상 테스트 클래스를 정의하고, Fake와 Real 구현체 양쪽에서 동일한 테스트를 실행하여 인터페이스 계약 준수를 검증하는 패턴
 
 **검색 증강 생성** (Retrieval-Augmented Generation, RAG) - LLM이 외부 지식 베이스에서 관련 정보를 검색하여 답변 품질을 높이는 기술 프레임워크
 
@@ -129,6 +131,8 @@ status: done
 ---
 
 ## ㅌ
+
+**테스트 주도 개발** (Test-Driven Development, TDD) - 테스트를 먼저 작성하고, 테스트를 통과시키는 최소한의 구현을 작성한 뒤, 리팩터링하는 Red-Green-Refactor 사이클 기반 개발 방법론
 
 **특수화** (Specialization) - 일반화의 반대 개념. 상위 개념을 구체적인 하위 개념으로 세분화하는 과정
 
